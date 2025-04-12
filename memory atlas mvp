@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memory Atlas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #f4f4f4;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #ffa502;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    label {
+      font-size: 1.1rem;
+      margin-top: 12px;
+    }
+
+    input, textarea, button {
+      margin-top: 12px;
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    input, textarea {
+      background-color: #1f1f1f;
+      color: #fff;
+    }
+
+    button {
+      background-color: #ffa502;
+      color: #121212;
+      cursor: pointer;
+      font-weight: bold;
+      width: auto;
+      max-width: 200px;
+      margin: 20px auto 0;
+    }
+
+    button:hover {
+      background-color: #e07b00;
+    }
+
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #1f1f1f;
+      border-left: 4px solid #ffa502;
+      border-radius: 6px;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header with Book Icon and Firework Logo -->
+  <h1>
+    <img class="logo" src="https://img.icons8.com/ios-filled/50/ffa502/firework.png" alt="Firework Logo" />
+    Memory Atlas
+    <i class="fas fa-book" style="color: #ffa502; margin-left: 10px; font-size: 1.5rem;"></i>
+  </h1>
+
+  <p>Enter any date and a feeling or memory. We’ll place it into the symbolic Firework Calendar and return a name for that moment in time.</p>
+
+  <label for="date">📆 Date:</label>
+  <input type="date" id="date">
+
+  <label for="emotion">💭 Memory or Feeling:</label>
+  <textarea id="emotion" rows="3" placeholder="e.g. joy, breakthrough, loss..."></textarea>
+
+  <button onclick="generateMemory()">Generate Symbolic Day</button>
+
+  <div class="result" id="result" style="display:none;"></div>
+
+  <script>
+    const months = [
+      "Ignisveil", "Thawreach", "Dawnsworn",
+      "Verdelune", "Petraflare", "Solmirth",
+      "Cinderhall", "Shademeet", "Hollowglen",
+      "Driftsoul", "Frostwake", "Nulltide"
+    ];
+    const pillars = [
+      "Emberlight", "Bloomspire", "Duskhorn", "Frostmourn"
+    ];
+    const symbols = [
+      "Day of Awakening", "Echo of Stillness", "Flame of Becoming",
+      "Memory of Rainlight", "The Ember Turn", "Hollow Flame", "The Rooted Spark",
+      "Path of Renewal", "The Mirror Fade", "The Skybound Thread"
+    ];
+
+    function generateMemory() {
+      const dateInput = document.getElementById("date").value;
+      const feeling = document.getElementById("emotion").value.trim();
+      const resultBox = document.getElementById("result");
+
+      if (!dateInput || !feeling) {
+        alert("Please enter both date and memory.");
+        return;
+      }
+
+      const date = new Date(dateInput);
+      const monthIndex = date.getMonth(); // 0-11
+      const monthName = months[monthIndex];
+      const pillar = pillars[Math.floor(monthIndex / 3)];
+      const quarter = `${Math.floor(monthIndex / 3) + 1}/4`;
+      const third = `${Math.floor(monthIndex / 4) + 1}/3`;
+      const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+
+      const output = `
+        <h2>✨ ${symbol}</h2>
+        <p><strong>Date:</strong> ${date.toDateString()}</p>
+        <p><strong>Emotion/Memory:</strong> ${feeling}</p>
+        <p><strong>Fantasy Month:</strong> ${monthName}</p>
+        <p><strong>Pillar of the Year:</strong> ${pillar}</p>
+        <p><strong>Firework Fractions:</strong> Quarter ${quarter}, Third ${third}</p>
+        <p><strong>Interpretation:</strong> This moment is etched into your Memory Atlas — a symbolic point in your emotional timeline.</p>
+      `;
+
+      resultBox.innerHTML = output;
+      resultBox.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
